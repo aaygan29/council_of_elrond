@@ -1,0 +1,14 @@
+{
+    "name": "council-review",
+    "owner": {
+          "name": "Aayush Gandhi",
+          "email": "aaygan29@gmail.com"
+    },
+    "plugins": [
+          {
+                  "name": "council-review",
+                  "source": "./plugins/council-review",
+                  "description": "Empirical, adversarial research review. Convenes a Council of Elrond reviewer panel and judges a scientific work against a hard empirical gate ladder, emitting an ACCEPT / MAJOR REVISION / REJECT verdict with severity-ranked findings."
+          }
+    ]
+}
