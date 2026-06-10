@@ -1,0 +1,8 @@
+{
+  "name": "council-review",
+  "description": "Empirical, adversarial research review for Claude. A Council of Elrond reviewer panel judges papers, proposals, and live code+results against a hard empirical gate ladder.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Aayush Gandhi"
+  }
+}
