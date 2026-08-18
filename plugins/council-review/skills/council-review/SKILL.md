@@ -58,7 +58,10 @@ abstract overclaims, or pressure-testing a method. It works on external papers
 
 It is domain-tuned for in-silico neuroscience / neuro-AI (encoding models, RSA,
 attention-topology, fMRI alignment, manipulation/footprint metrics) but the gate
-ladder is general to any quantitative empirical claim.
+ladder is general to any quantitative empirical claim. For non in-silico
+empirical work (clinical, biomedical, observational, meta-analysis), see
+`references/domain-adaptation.md` for how the gates map onto CONSORT, STROBE,
+PRISMA, ARRIVE, and general clinical-trial reporting.
 
 ## How to run a review
 
@@ -87,6 +90,23 @@ Also fix the **stance**, orthogonal to the target type:
 
 State the mode, the stance, and list the central claims before judging anything. A
 review that hasn't named the claims is just vibes.
+
+### Scope the review to the ask
+
+Infer the review's depth from the user's phrasing, or ask in one line if unclear:
+
+- **Quick** (a gut check / "is this obviously broken") - run the core gates 0-6 on
+  the central claim only, the error-analysis pass on the headline number, and
+  report the top 1-3 findings plus the verdict. Skip orchestrated lookups.
+- **Standard** (default, pre-submission review) - full gate ladder as relevant, all
+  standing seats, specialists as the design invites, error-analysis pass,
+  conditional gates.
+- **Deep** (exhaustive audit / "tear it apart completely") - everything in Standard
+  plus orchestrated literature/verification lookups, recompute every checkable
+  number, convene all specialists, and run the reviewer self-guard explicitly.
+
+Empirical rigor (never rubber-stamp) is constant across levels; only breadth and
+orchestration scale.
 
 ### 2. Build the Claim Ledger
 
@@ -153,10 +173,24 @@ worked examples for all of them in `references/empirical-gates.md`.
   bars and chance line present), readable and colorblind-safe, and actually showing
   what the text claims. A figure that contradicts a central claim is a Blocker. No
   figures -> mark **N/A**. Full rubric in `references/figure-review.md`.
+- **Gate T - Theoretical Soundness (conditional).** Fires only when the work makes
+  formal/mathematical claims (theorems, proofs, derivations, complexity/convergence
+  results). Are assumptions stated and realistic, is each proof step valid, do the
+  theorem's conditions match how it's actually applied, is the result novel, are bounds
+  tight rather than vacuous? No formal claims -> mark **N/A**. Owned by Elrond. Full
+  rubric in `references/empirical-gates.md`.
 
 Mark each gate **PASS / FAIL / N/A** with the specific evidence (a recomputed
 number, a `file:line`, a quote). N/A is allowed (a theory paper has no Gate 0; a
 text-only draft has no Gate F), but say why.
+
+**The degenerate all-N/A case.** For a pure position/theory/opinion paper, most or all of
+the empirical gates (0-5, 7-9) will legitimately be N/A - there is no data to leak, no
+seeds to vary, no sample to generalize. That is a valid, honest state, not a shortcut. The
+review still runs: Gate 6 (claim calibration), Gate T if the work makes formal claims, the
+Exposition pass (Samwise), and Legolas (novelty). The verdict then rests on calibration,
+novelty, and argument quality rather than the empirical ladder - say so explicitly rather
+than forcing empirical gates to apply where they don't.
 
 **Quantitative error-analysis pass.** For every quantitative headline, run the
 statistical robustness battery in `references/statistical-robustness.md` and show the
@@ -214,15 +248,100 @@ See `references/orchestration.md` for the routing table. In short:
 - **MAJOR REVISION** - plausibly real but a gate fails fixably.
 - **ACCEPT** - all relevant gates pass and every claim's language matches its tier.
 
-Always end with **"What would change the verdict"**: the single most efficient
-experiment or edit that moves the work up one decision level.
+**Methodology-tier and conditional gates.** Gates 7-11 and Gate F do not all carry
+the same weight as Gate 0, but they are not automatic MAJOR REVISIONs either:
+
+- **Gate 0 failure is terminal** - REJECT regardless of everything else.
+- **Gate 10 (ethics/safety) failure can be terminal on its own**, independent of
+  technical quality - IRB/consent gaps, unaddressed dual-use risk, or licensing/PII
+  problems can force REJECT or desk-reject-level treatment even when the empirical
+  core is sound.
+- **Gate 11 (analytic integrity) failure** - an exploratory result relabeled
+  confirmatory forces re-scoping the claim (T3, not T5). This is usually **MAJOR
+  REVISION**, not REJECT, since the fix is to re-scope the language rather than redo
+  the study.
+- **Single failures in Gates 7/8/9** (external validity, measurement, reproducibility)
+  are usually **MAJOR REVISION** (fixable with an added test, a released recipe, or a
+  reliability check) - not REJECT - unless the failure invalidates the central claim
+  itself (e.g. the effect turns out to be a measurement artifact).
+- **Gate F failure on a central claim** - a figure that contradicts a central claim is
+  treated like a core Blocker (see Gate F rubric) and can move the verdict the same way
+  a Gates 0-6 failure would.
+
+Always end with **"What would change the verdict"**: name a single, concrete,
+minimal experiment, analysis, or edit - not "do more validation." State its
+expected outcome and the decision level it would move the work to if it
+succeeds: "run X (N seeds / this control / this partial correlation); if it
+shows Y, the verdict moves to ACCEPT [or MAJOR REVISION]." A vague direction is
+not an answer here; a reviewer who cannot name the one check has not finished
+walking the ladder.
+
+**Verify the load-bearing finding first.** Before rendering REJECT or MAJOR
+REVISION, identify the single load-bearing finding: the one Blocker/Major that
+most drives the decision. Apply the same steelman-then-break discipline to that
+finding that the Council applies to the work: steelman the authors' side, try to
+refute your own finding, and confirm the evidence (recompute the number, re-read
+the `file:line`, re-read the claim as actually stated). A verdict should never
+hinge on an unverified finding. This is Gate 1's adversarial discipline turned on
+the review's own decision.
+
+**Coherence pass.** Immediately before emitting, reconcile the whole review for
+internal consistency: the gate ladder PASS/FAIL, the Claim Ledger's actual
+tiers, the Council's objections, the severity-ranked findings, and the verdict
+must all agree with each other. A gate marked PASS while a seat raises a
+Blocker on that same issue is a self-contradiction. A Claim Ledger "actual tier"
+that a gate result contradicts (e.g. T4 "robust" next to a failed Gate 4) is a
+self-contradiction. Fix these before output, not after - a review that ships
+with a visible internal contradiction has not finished the job.
+
+When a target venue is known or given, the verdict may optionally be translated
+into that venue's scale (e.g. a NeurIPS 1-10 soundness/overall score, or a
+journal's accept/minor/major/reject scale), but the ACCEPT/MAJOR
+REVISION/REJECT decision remains primary.
+
+## Calibrate the review itself
+
+The review is subject to the same Type I discipline it applies to the work under
+review. A confidently-stated finding you cannot support is the review's own false
+positive.
+
+- Every finding carries an explicit confidence (**High / Medium / Low**), or is
+  marked **evidence-blocked** when the artifact does not provide what is needed to
+  judge it.
+- When evidence-blocked, **abstain** and name exactly what the author must provide
+  (the missing seed sweep, the unreleased config, the absent CI) rather than
+  guessing a severity to fill the slot.
+- Do not inflate a Nit to a Blocker to look rigorous. Do not bury a Blocker as a
+  Nit to be polite. Severity is a claim about the work, not a performance of scrutiny.
+
+### Reviewer failure-modes self-guard
+
+The review is itself an experiment, and these are its confounds. The Council must
+self-check the same systematic biases it hunts for in the work under review:
+
+- **Anchoring** (first impression fixes the verdict) -> form the verdict from the
+  gate ladder, not the first read.
+- **Elegance / halo** (a beautiful method waved through) -> an elegant method still
+  must pass Gate 0-6; beauty is not evidence.
+- **Confirmation** (finding the flaw you expected) -> run the steelman before the
+  attack; let a clean gate be clean.
+- **Severity inflation / harshness performance** (inflating nits to look rigorous)
+  -> severity is a claim about the work, not a display of scrutiny.
+- **Base-rate neglect** (assuming something must be wrong) -> "no objection" is a
+  valid, honest seat entry; a strong work earns a fast ACCEPT.
+- **Novelty / prestige / authorship bias** (over- or under-crediting by source) ->
+  judge the artifact, not the byline.
 
 ## Output format
 
 ```
 # Council Review - <title>
 
-## Verdict: ACCEPT | MAJOR REVISION | REJECT
+## Verdict: ACCEPT | MAJOR REVISION | REJECT   (optional venue score: e.g. NeurIPS-style 1-10, or accept-confidence 0-100)
+
+## Strengths
+- <what is genuinely sound and should be preserved>
+- <...>
 
 ## Claim Ledger
 | # | Claim (as stated) | Asserted tier | Actual tier | Gate status |
@@ -241,6 +360,7 @@ experiment or edit that moves the work up one decision level.
 - Gate 10 Ethics/Safety ...... PASS/FAIL/N/A - <evidence>
 - Gate 11 Analytic Integrity . PASS/FAIL/N/A - <evidence>
 - Gate F Figure Integrity .... PASS/FAIL/N/A - <evidence, or "N/A - no figures">
+- Gate T Theoretical Sound ... PASS/FAIL/N/A - <evidence, or "N/A - no formal claims">
 
 ## Error Analysis            (per quantitative headline)
 - Claim <n>: dominant risk = Type I | Type II; <the number that bounds it: m*alpha
@@ -262,12 +382,15 @@ experiment or edit that moves the work up one decision level.
 - **Treebeard (ethics/safety):** ...      (specialist; seat/skip with reason)
 
 ## Severity-ranked findings
-1. [Blocker] ... Fix: ...
-2. [Major] ...
-3. [Minor] ...
+1. [Blocker | High] ... Fix: ...
+2. [Major | Medium] ...
+3. [Minor | High] ...
+4. [evidence-blocked] ... Needed: <what the author must provide>
 
 ## What would change the verdict
-<the single highest-leverage experiment / analysis / edit>
+<one concrete, minimal experiment/analysis/edit, its expected outcome, and the
+decision level it would move the work to if it succeeds - e.g. "run the 20-seed
+sweep on X; if d stays > 0.5, verdict moves to ACCEPT.">
 
 ## Evidence log
 <citations, file:line refs, every recomputed number with its source>
@@ -294,4 +417,6 @@ experiment or edit that moves the work up one decision level.
 - **Recompute before you trust.** In artifact mode, verify every number you can.
 - **Severity honestly.** A Blocker invalidates a central claim. A Nit is cosmetic.
 - **Attack the work, support the author.** Every finding pairs with the fix.
+- **Name the strongest work too.** Note what should be preserved, not only the flaws. A
+  review that lists only faults miscalibrates the author about what actually works.
 - **No verdict without the ladder.** The ladder is the empiricism; the rest is presentation.

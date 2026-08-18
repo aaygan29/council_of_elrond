@@ -15,6 +15,7 @@ reflexively - each one costs context and time, and a clean gate needs no help.
 | General scholarly-writing quality: structure, argument rigor, framing (Boromir, Elrond) | `scholar-evaluation` | Structured scholarly critique to fold into findings |
 | Recompute / sanity-check the actual code+results in artifact mode (Aragorn, Gandalf, Elrond) | `verification-loop` | Re-run numbers, reproducibility check, discrepancy report |
 | Capture the finished review into the knowledge base / graph | `knowledge-ops` or `graphify` | Persisted review node, linked to the project |
+| Non in-silico empirical work (clinical/biomedical/observational/meta-analysis) | consult `references/domain-adaptation.md` directly | Reporting-standard mapping (CONSORT/STROBE/PRISMA/ARRIVE) onto the gate ladder |
 
 ## Sequencing within a review
 
