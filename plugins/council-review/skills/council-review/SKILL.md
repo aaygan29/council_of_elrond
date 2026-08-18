@@ -58,7 +58,10 @@ abstract overclaims, or pressure-testing a method. It works on external papers
 
 It is domain-tuned for in-silico neuroscience / neuro-AI (encoding models, RSA,
 attention-topology, fMRI alignment, manipulation/footprint metrics) but the gate
-ladder is general to any quantitative empirical claim.
+ladder is general to any quantitative empirical claim. For non in-silico
+empirical work (clinical, biomedical, observational, meta-analysis), see
+`references/domain-adaptation.md` for how the gates map onto CONSORT, STROBE,
+PRISMA, ARRIVE, and general clinical-trial reporting.
 
 ## How to run a review
 
@@ -265,8 +268,13 @@ the same weight as Gate 0, but they are not automatic MAJOR REVISIONs either:
   treated like a core Blocker (see Gate F rubric) and can move the verdict the same way
   a Gates 0-6 failure would.
 
-Always end with **"What would change the verdict"**: the single most efficient
-experiment or edit that moves the work up one decision level.
+Always end with **"What would change the verdict"**: name a single, concrete,
+minimal experiment, analysis, or edit - not "do more validation." State its
+expected outcome and the decision level it would move the work to if it
+succeeds: "run X (N seeds / this control / this partial correlation); if it
+shows Y, the verdict moves to ACCEPT [or MAJOR REVISION]." A vague direction is
+not an answer here; a reviewer who cannot name the one check has not finished
+walking the ladder.
 
 **Verify the load-bearing finding first.** Before rendering REJECT or MAJOR
 REVISION, identify the single load-bearing finding: the one Blocker/Major that
@@ -276,6 +284,15 @@ refute your own finding, and confirm the evidence (recompute the number, re-read
 the `file:line`, re-read the claim as actually stated). A verdict should never
 hinge on an unverified finding. This is Gate 1's adversarial discipline turned on
 the review's own decision.
+
+**Coherence pass.** Immediately before emitting, reconcile the whole review for
+internal consistency: the gate ladder PASS/FAIL, the Claim Ledger's actual
+tiers, the Council's objections, the severity-ranked findings, and the verdict
+must all agree with each other. A gate marked PASS while a seat raises a
+Blocker on that same issue is a self-contradiction. A Claim Ledger "actual tier"
+that a gate result contradicts (e.g. T4 "robust" next to a failed Gate 4) is a
+self-contradiction. Fix these before output, not after - a review that ships
+with a visible internal contradiction has not finished the job.
 
 When a target venue is known or given, the verdict may optionally be translated
 into that venue's scale (e.g. a NeurIPS 1-10 soundness/overall score, or a
@@ -371,7 +388,9 @@ self-check the same systematic biases it hunts for in the work under review:
 4. [evidence-blocked] ... Needed: <what the author must provide>
 
 ## What would change the verdict
-<the single highest-leverage experiment / analysis / edit>
+<one concrete, minimal experiment/analysis/edit, its expected outcome, and the
+decision level it would move the work to if it succeeds - e.g. "run the 20-seed
+sweep on X; if d stays > 0.5, verdict moves to ACCEPT.">
 
 ## Evidence log
 <citations, file:line refs, every recomputed number with its source>

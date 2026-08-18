@@ -12,6 +12,9 @@ An empirical, adversarial research-review tool for Claude. It convenes a fixed p
 - **Conditional figure review (Gate F).** When (and only when) the work contains figures, it judges each one on message/takeaway, honesty of the visual encoding (truncated axes, missing error bars, absent chance line), readability/colorblind-safety, and claim-figure correspondence. A figure that quietly contradicts a central claim is a Blocker. Text-only drafts skip it. See `figure-review.md`.
 - **Two stances.** A *gatekeeper* stance for pre-submission ("tear it apart") and a *development* stance that keeps the rigor but adds generative paper-writing feedback: an exposition/argument-chain pass, generative figure feedback, and a Reviewer-2 pre-mortem that pre-loads the objections a hostile reviewer will raise. See `paper-development.md`.
 - Returns a decision (ACCEPT, MAJOR REVISION, or REJECT), a severity-ranked list of findings, and the single highest-leverage change that would move the work up one level.
+- **Self-calibrates.** Every finding carries an explicit confidence and abstains (rather than guessing a severity) when the artifact is evidence-blocked; the Council runs a self-guard against its own reviewer biases (anchoring, halo, confirmation, severity inflation); the single load-bearing finding behind a REJECT/MAJOR REVISION is verified before it's allowed to drive the verdict; and a final coherence pass reconciles the gate ladder, Claim Ledger, Council objections, and verdict before output.
+- **Scales to the ask.** Quick / Standard / Deep review scopes trade breadth and orchestration for speed without relaxing empirical rigor, and a conditional Gate T (theoretical soundness) fires for formal/mathematical claims.
+- **Portable beyond in-silico neuro/AI.** The gate ladder maps onto non in-silico reporting standards - CONSORT, STROBE, PRISMA, ARRIVE, and general clinical-trial hooks - via `references/domain-adaptation.md`, so a clinical, biomedical, or observational study can be reviewed with the same ladder.
 
 ## Data & grounding
 
@@ -19,4 +22,4 @@ The gate ladder encodes empirical failure modes that have sunk real in-silico st
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+MIT - see [LICENSE](LICENSE).
