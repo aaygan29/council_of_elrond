@@ -349,6 +349,45 @@ mode but first-class generative feedback in development mode.
 
 ---
 
+## Gate T - Theoretical Soundness (conditional)
+
+**Question:** Where the work makes formal or mathematical claims, is the theory actually
+correct?
+
+**Fires only when the work contains formal/mathematical claims** - theorems, proofs,
+derivations, complexity or convergence claims. A purely empirical paper with no formal
+apparatus → mark **N/A - no formal claims**.
+
+**Checks:**
+- Are the assumptions stated explicitly, and are they realistic - or is a strong
+  assumption silently doing all the work the theorem gets credit for?
+- Is each proof step valid? Are edge cases and boundary conditions (n=0, degenerate
+  inputs, non-convexity, measure-zero exceptions) handled rather than waved past?
+- Do the theorem's stated conditions actually match how the result is *applied* or
+  *claimed* elsewhere in the paper? A theorem proved under condition X, cited later as
+  if it held under condition Y, is a mismatch.
+- Is the result novel, or a restatement / minor corollary of a known result presented as
+  new?
+- For bounds: are they tight, or vacuous (e.g., a bound that exceeds the trivial worst
+  case, or a convergence rate that never binds at the N's actually used)?
+
+**FAIL looks like:** a proof that assumes what it sets out to show (circular); a theorem
+whose assumptions never hold in the paper's own experimental setting; a convergence bound
+that is technically true but vacuous at any N the paper actually runs.
+
+**Worked example:** a paper claimed a novel convergence guarantee for its optimizer under
+an "L-smooth, mu-strongly-convex" assumption, then applied the optimizer only to a
+non-convex deep network in the experiments - the theorem's conditions were never met by
+the setting the paper draws conclusions about. Separately, the stated bound reduced
+algebraically to O(1/sqrt(N)) already implied by standard SGD analysis, i.e. not a new
+result. -> Gate T failure: assumptions don't match application, and the "novel" bound was
+a restatement. The theoretical claim should be scoped to "under conditions not met by our
+experiments" or removed, and the convergence claim relabeled non-novel. Owned by Elrond;
+usually **MAJOR REVISION** (rescope the claim) unless the entire contribution rests on the
+broken proof, in which case it is closer to REJECT.
+
+---
+
 ## Modern ML / empirical failure-mode checklist (cross-cutting)
 
 Beyond the numbered gates, sweep for the failure modes that sink applied ML and

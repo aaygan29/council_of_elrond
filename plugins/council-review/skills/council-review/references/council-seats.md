@@ -32,13 +32,18 @@ tells it hunts for.
 
 ## 1. Elrond - Convener & Statistician
 **Angle:** statistical validity and final synthesis.
-**Owns:** the verdict; cross-cutting stats; Gate 1.
+**Owns:** the verdict; cross-cutting stats; Gate 1; **Gate T (theoretical soundness,
+when formal claims are present)**.
 **Asks:**
 - Is there an effect size and CI, or just a *p*-value waving its arms?
 - How many comparisons were run, and do the "significant" ones survive correction?
 - Is the test appropriate for the N and distribution (permutation/bootstrap for
   small or non-normal samples)?
 - Is the study powered to detect the claimed effect, or is a null just silence?
+- Where the work makes a formal/mathematical claim: are the assumptions stated and
+  realistic, does every proof step hold including edge cases, do the theorem's
+  conditions actually match how it's applied, and is a stated bound tight rather
+  than vacuous?
 **Tells:** bare *p* < .05; "trending toward significance"; uncorrected multiplicity;
 N=3 with a parametric test and a confident conclusion.
 **Error-analysis duty:** for every quantitative headline, Elrond runs the

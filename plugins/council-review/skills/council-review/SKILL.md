@@ -153,10 +153,24 @@ worked examples for all of them in `references/empirical-gates.md`.
   bars and chance line present), readable and colorblind-safe, and actually showing
   what the text claims. A figure that contradicts a central claim is a Blocker. No
   figures -> mark **N/A**. Full rubric in `references/figure-review.md`.
+- **Gate T - Theoretical Soundness (conditional).** Fires only when the work makes
+  formal/mathematical claims (theorems, proofs, derivations, complexity/convergence
+  results). Are assumptions stated and realistic, is each proof step valid, do the
+  theorem's conditions match how it's actually applied, is the result novel, are bounds
+  tight rather than vacuous? No formal claims -> mark **N/A**. Owned by Elrond. Full
+  rubric in `references/empirical-gates.md`.
 
 Mark each gate **PASS / FAIL / N/A** with the specific evidence (a recomputed
 number, a `file:line`, a quote). N/A is allowed (a theory paper has no Gate 0; a
 text-only draft has no Gate F), but say why.
+
+**The degenerate all-N/A case.** For a pure position/theory/opinion paper, most or all of
+the empirical gates (0-5, 7-9) will legitimately be N/A - there is no data to leak, no
+seeds to vary, no sample to generalize. That is a valid, honest state, not a shortcut. The
+review still runs: Gate 6 (claim calibration), Gate T if the work makes formal claims, the
+Exposition pass (Samwise), and Legolas (novelty). The verdict then rests on calibration,
+novelty, and argument quality rather than the empirical ladder - say so explicitly rather
+than forcing empirical gates to apply where they don't.
 
 **Quantitative error-analysis pass.** For every quantitative headline, run the
 statistical robustness battery in `references/statistical-robustness.md` and show the
@@ -214,8 +228,43 @@ See `references/orchestration.md` for the routing table. In short:
 - **MAJOR REVISION** - plausibly real but a gate fails fixably.
 - **ACCEPT** - all relevant gates pass and every claim's language matches its tier.
 
+**Methodology-tier and conditional gates.** Gates 7-11 and Gate F do not all carry
+the same weight as Gate 0, but they are not automatic MAJOR REVISIONs either:
+
+- **Gate 0 failure is terminal** - REJECT regardless of everything else.
+- **Gate 10 (ethics/safety) failure can be terminal on its own**, independent of
+  technical quality - IRB/consent gaps, unaddressed dual-use risk, or licensing/PII
+  problems can force REJECT or desk-reject-level treatment even when the empirical
+  core is sound.
+- **Gate 11 (analytic integrity) failure** - an exploratory result relabeled
+  confirmatory forces re-scoping the claim (T3, not T5). This is usually **MAJOR
+  REVISION**, not REJECT, since the fix is to re-scope the language rather than redo
+  the study.
+- **Single failures in Gates 7/8/9** (external validity, measurement, reproducibility)
+  are usually **MAJOR REVISION** (fixable with an added test, a released recipe, or a
+  reliability check) - not REJECT - unless the failure invalidates the central claim
+  itself (e.g. the effect turns out to be a measurement artifact).
+- **Gate F failure on a central claim** - a figure that contradicts a central claim is
+  treated like a core Blocker (see Gate F rubric) and can move the verdict the same way
+  a Gates 0-6 failure would.
+
 Always end with **"What would change the verdict"**: the single most efficient
 experiment or edit that moves the work up one decision level.
+
+## Calibrate the review itself
+
+The review is subject to the same Type I discipline it applies to the work under
+review. A confidently-stated finding you cannot support is the review's own false
+positive.
+
+- Every finding carries an explicit confidence (**High / Medium / Low**), or is
+  marked **evidence-blocked** when the artifact does not provide what is needed to
+  judge it.
+- When evidence-blocked, **abstain** and name exactly what the author must provide
+  (the missing seed sweep, the unreleased config, the absent CI) rather than
+  guessing a severity to fill the slot.
+- Do not inflate a Nit to a Blocker to look rigorous. Do not bury a Blocker as a
+  Nit to be polite. Severity is a claim about the work, not a performance of scrutiny.
 
 ## Output format
 
@@ -223,6 +272,10 @@ experiment or edit that moves the work up one decision level.
 # Council Review - <title>
 
 ## Verdict: ACCEPT | MAJOR REVISION | REJECT
+
+## Strengths
+- <what is genuinely sound and should be preserved>
+- <...>
 
 ## Claim Ledger
 | # | Claim (as stated) | Asserted tier | Actual tier | Gate status |
@@ -241,6 +294,7 @@ experiment or edit that moves the work up one decision level.
 - Gate 10 Ethics/Safety ...... PASS/FAIL/N/A - <evidence>
 - Gate 11 Analytic Integrity . PASS/FAIL/N/A - <evidence>
 - Gate F Figure Integrity .... PASS/FAIL/N/A - <evidence, or "N/A - no figures">
+- Gate T Theoretical Sound ... PASS/FAIL/N/A - <evidence, or "N/A - no formal claims">
 
 ## Error Analysis            (per quantitative headline)
 - Claim <n>: dominant risk = Type I | Type II; <the number that bounds it: m*alpha
@@ -262,9 +316,10 @@ experiment or edit that moves the work up one decision level.
 - **Treebeard (ethics/safety):** ...      (specialist; seat/skip with reason)
 
 ## Severity-ranked findings
-1. [Blocker] ... Fix: ...
-2. [Major] ...
-3. [Minor] ...
+1. [Blocker | High] ... Fix: ...
+2. [Major | Medium] ...
+3. [Minor | High] ...
+4. [evidence-blocked] ... Needed: <what the author must provide>
 
 ## What would change the verdict
 <the single highest-leverage experiment / analysis / edit>
@@ -294,4 +349,6 @@ experiment or edit that moves the work up one decision level.
 - **Recompute before you trust.** In artifact mode, verify every number you can.
 - **Severity honestly.** A Blocker invalidates a central claim. A Nit is cosmetic.
 - **Attack the work, support the author.** Every finding pairs with the fix.
+- **Name the strongest work too.** Note what should be preserved, not only the flaws. A
+  review that lists only faults miscalibrates the author about what actually works.
 - **No verdict without the ladder.** The ladder is the empiricism; the rest is presentation.
