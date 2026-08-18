@@ -3,8 +3,21 @@
 The Council is a fixed panel. Each seat owns one angle of attack and is
 responsible for the failure mode that angle catches. The point of fixed seats is
 coverage: a lone reviewer forgets to check confounds when the stats look clean, or
-waves through an overclaim because the method is elegant. Seven seats, each
-relentless about one thing, leave fewer blind spots.
+waves through an overclaim because the method is elegant. A standing panel of eight
+core seats, each relentless about one thing, leaves fewer blind spots, and four
+specialist seats (9-12) convene to cover generalization, reproducibility, analytic
+integrity, and ethics when the work invites them. The eighth core seat (Samwise,
+figures and exposition) fires its figure duties only when the work has visual
+exhibits; on a text-only target it contributes the exposition pass alone.
+
+Each seat maps to a distinct pillar of experimental methodology, so together they
+cover a study end to end: is the ground real (Aragorn), would it repeat (Gandalf), is
+it stable (Gandalf/Gimli), is the named mechanism specific and necessary (Gimli, plus
+Gates 3/5), is the measure valid and reliable (Galadriel), are confounds controlled
+(Galadriel), does it generalize (Faramir), can it be reproduced (Eowyn), was it
+preregistered and honestly analyzed (Bilbo), is it ethical and safe (Treebeard), does
+the language match the evidence (Boromir), is it novel and correctly cited (Legolas),
+do the figures and the argument land (Samwise), and are the statistics sound (Elrond).
 
 Give each seat its strongest one or two objections, tagged with severity
 (**Blocker** invalidates a central claim · **Major** weakens it · **Minor** should
@@ -28,6 +41,13 @@ tells it hunts for.
 - Is the study powered to detect the claimed effect, or is a null just silence?
 **Tells:** bare *p* < .05; "trending toward significance"; uncorrected multiplicity;
 N=3 with a parametric test and a confident conclusion.
+**Error-analysis duty:** for every quantitative headline, Elrond runs the
+**statistical robustness pass** in `references/statistical-robustness.md` and shows the
+numbers: which error is at risk here (Type I false positive vs Type II underpowered
+null), the `m x alpha` expectation and binomial "by chance" tail for multiplicity, how
+many hits survive correction, the minimum detectable effect size for any null, and
+arithmetic-consistency / fragility checks for suspiciously clean results. Adjectives
+("robust", "highly significant") are not allowed to stand in for the computed bound.
 **Synthesis duty:** after all seats report, Elrond maps objections to gates and
 renders ACCEPT / MAJOR REVISION / REJECT. No seat overrides a Gate 0 failure.
 
@@ -67,14 +87,20 @@ a warning."*
 
 ---
 
-## 4. Galadriel - Construct Validity
-**Angle:** does the measure mean what its name claims?
-**Owns:** Gate 4 (confounds) jointly with Boromir's calibration.
+## 4. Galadriel - Construct & Measurement Validity
+**Angle:** does the measure mean what its name claims, and measure it consistently?
+**Owns:** Gate 4 (confounds) jointly with Boromir's calibration; **Gate 8**
+(measurement validity & reliability).
 **Asks:**
 - Does this metric operationalize the construct, or a convenient proxy that drifts
   from it?
 - What third variable co-varies with both axes? (Usually **size**.)
 - If you partial out the obvious confound, does the effect survive?
+- Is the instrument **reliable** (test-retest / internal consistency / inter-rater),
+  and does the effect fit under that reliability ceiling, or is it noise the unreliable
+  measure lets through?
+- Is there attenuation or a ceiling/floor effect hiding the real variance? For an
+  intervention, is there a manipulation check that it did what it claims?
 - Is "alignment"/"similarity"/"brain-like" defined precisely enough to be falsified?
 **Tells:** raw correlations across systems of different scale; a composite index
 whose components aren't validated; "brain-like" used as an adjective with no
@@ -140,6 +166,118 @@ you think is empty."*
 
 ---
 
+## 8. Samwise - Figure & Exposition Auditor
+**Angle:** does the paper *show* and *say* what it claims, clearly and honestly?
+**Owns:** Gate F (figure integrity, **fires only when figures are present**) and the
+Exposition pass (argument chain, contribution traceability, clarity).
+**Asks:**
+- Skim only the abstract, figures, and captions: do you arrive at the thesis? If the
+  figures don't carry the argument, the paper is under-built.
+- Does each figure make one clear point, and does the caption state that takeaway, or
+  is it a bare "Figure 3: results"?
+- Is any encoding quietly dishonest: truncated axis, missing error bars, no chance
+  line, a hand-picked example narrated as typical?
+- Does a figure show a null or a mixed result that the text narrates as a clean win?
+- Is every claimed contribution traceable to a specific result (and ideally a figure)?
+- Colorblind-safe, legible, not overloaded, not a figure that should be a sentence?
+**Tells:** captions that state no result; bars with no error bars or chance line;
+red/green-only encodings; a "representative" trace with no aggregate; a headline claim
+with no supporting figure; a panel that contradicts the sentence citing it; an
+abstract sentence no result can cash.
+**Conditional:** if the work has no visual exhibit, Samwise reports "Gate F N/A - no
+figures" and contributes only the Exposition pass. Do not manufacture figure critique
+for a text-only draft. Full checklist in `references/figure-review.md`; exposition and
+development-mode duties in `references/paper-development.md`.
+**Signature line:** *"A map that lies about the road is worse than no map. Show me the
+figure, and let it tell the truth on its own."*
+
+---
+
+# Specialist seats (convene when the work invites them)
+
+Seats 1-8 are the standing panel: they sit on every review. Seats 9-12 own the
+extended methodology gates and are convened when the design invites them. Say in one
+line why each specialist is seated or skipped (e.g. "Treebeard seated: human-subjects
+data" or "Bilbo skipped: no confirmatory claim, purely exploratory and labeled so").
+A specialist that is seated is as ruthless as any core seat.
+
+## 9. Faramir - External Validity & Generalization
+**Angle:** does it hold beyond exactly what was tested?
+**Owns:** Gate 7 (external validity, generalization, boundary conditions).
+**Asks:**
+- Is generalization claimed but only single-dataset / single-model / single-site
+  evidence provided?
+- Is the sample representative of the population the claim is about, or a convenience
+  sample the claim silently outgrows?
+- Where should the effect break, and did anyone test that boundary?
+- Is the eval set representative of the deployment distribution?
+**Tells:** "generalizes" from one split; undergraduates standing in for "people"; one
+architecture standing in for "models"; no OOD or transfer test behind a general claim.
+**Signature line:** *"I have seen this land hold. Show me it holds on the far shore too,
+before you call the map complete."*
+
+## 10. Eowyn - Reproducibility & Open Science
+**Angle:** could an independent party re-run this and get the same number?
+**Owns:** Gate 9 (reproducibility, computational provenance).
+**Asks:**
+- Are seeds, configs, hyperparameters, and exact splits stated or released?
+- Is the code and environment available, and the data versioned with a fixed accessor
+  (not "on request")?
+- Is nondeterminism controlled or at least reported? Is compute/cost stated so "better"
+  is separable from "bigger budget"?
+- Can the headline be traced to a specific commit / artifact?
+**Tells:** "data available on request"; a SOTA with no released recipe; a hand-picked
+seed; a pipeline no one else could stand up.
+**Signature line:** *"A deed no one can repeat is a rumor. Give me the recipe, not the
+legend."*
+
+## 11. Bilbo - Preregistration & Analytic Integrity
+**Angle:** was the supporting analysis specified before the data spoke?
+**Owns:** Gate 11 (preregistration, confirmatory vs exploratory, HARKing, forking paths).
+**Asks:**
+- Is there a preregistration / analysis plan, or is this all post-hoc?
+- Are confirmatory and exploratory results honestly separated, or is an exploratory
+  finding narrated as an a priori prediction?
+- Any sign of HARKing, outcome switching, or a flexible stopping rule?
+- How many defensible analysis paths existed, and were the reported ones pre-committed?
+**Tells:** an exploratory subgroup result written as the main hypothesis; a "preregistered"
+claim whose prereg named a different primary outcome; analytic choices that all happen to
+point the same flattering way.
+**Signature line:** *"There and back again - but did you write the map before you set out,
+or after you knew where the treasure was?"*
+
+## 12. Treebeard - Ethics, Safety & Responsible Disclosure
+**Angle:** was this done and reported responsibly, and are its risks handled?
+**Owns:** Gate 10 (ethics, safety, dual-use, broader impact, fairness).
+**Asks:**
+- Human/animal subjects: IRB/consent/privacy handled and stated?
+- Data licensing, consent, and PII addressed for any collected or scraped set?
+- For misuse-capable work: is there a release-gating / responsible-disclosure thought,
+  or silence? Are broader impacts and limitations stated honestly?
+- Are subgroup harms / disparate error rates checked where the application warrants it?
+**Tells:** human data with no consent/IRB line; a scraped dataset with unaddressed
+licensing; a capability released with a demo and no risk discussion; "broader impacts"
+omitted where required.
+**Signature line:** *"Do not be hasty. A thing worth building is worth asking who it
+harms before you loose it on the world."*
+
+---
+
+## Sharpening the attack (applies to every seat)
+
+The Council's value is proportional to how hard it genuinely tries to break the work.
+Two disciplines keep the adversarial edge from going soft:
+
+- **Steelman, then break.** Before attacking a claim, state its strongest honest
+  interpretation. Then attack *that*, not a weaker strawman. A finding that survives
+  the steelman is a real finding; an objection that only lands against the weak reading
+  is a nit dressed up as a Blocker.
+- **Name the experiment that would embarrass the author.** For each central claim, a
+  seat should be able to name the specific plot, seed sweep, ablation, or control whose
+  most likely outcome would sink the claim. If you can't name it, you haven't found the
+  real weakness yet. The scariest such experiment becomes a candidate for "what would
+  change the verdict."
+
 ## Running the panel efficiently
 
 - You do not need a separate paragraph per seat for a clean work - a seat with no
@@ -148,4 +286,4 @@ you think is empty."*
   confound-driven overclaims), state it once and attribute jointly.
 - The convener (Elrond) speaks last. The verdict is a synthesis of objections
   mapped onto the gate ladder, not a vote count - a single Blocker at Gate 0
-  outweighs six clean seats.
+  outweighs a dozen clean seats.

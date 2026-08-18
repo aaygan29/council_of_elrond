@@ -1,7 +1,7 @@
 {
   "name": "council-review",
-  "description": "Empirical, adversarial research review for Claude. A Council of Elrond reviewer panel judges papers, proposals, and live code+results against a hard empirical gate ladder.",
-  "version": "0.1.0",
+  "description": "Empirical, adversarial research review for Claude. A twelve-seat Council of Elrond panel judges papers, proposals, and live code+results against an extended gate ladder: the empirical core (provenance, seed variance, specification robustness, specificity, confound control, mechanism, claim calibration) plus a methodology-completeness tier (external validity, measurement reliability, reproducibility, ethics/safety, analytic integrity/preregistration), a quantitative Type I/II error-analysis pass, and a conditional figure-integrity review. A development stance adds generative paper-writing feedback and a Reviewer-2 pre-mortem.",
+  "version": "0.2.0",
   "author": {
     "name": "Aayush Gandhi"
   }
