@@ -28,12 +28,19 @@ trying to break it.
 Each seat below: its angle, the questions it asks, the gate(s) it owns, and the
 tells it hunts for.
 
+**Every gate has a reviewer.** The full gate-to-seat map: Gate 0 Aragorn · Gates 1-2
+Gandalf · Gates 3 & 5 Gimli · Gate 4 & Gate 8 Galadriel · Gate 6 Boromir · Gate 7
+Faramir · Gate 9 Eowyn · Gate 10 Treebeard · Gate 11 Bilbo · Gate F Samwise · Gate T
+& Gate S Elrond. (Legolas owns novelty/prior-art, which feeds the Contribution axis
+of Gate S but is not a numbered gate.)
+
 ---
 
 ## 1. Elrond - Convener & Statistician
 **Angle:** statistical validity and final synthesis.
-**Owns:** the verdict; cross-cutting stats; Gate 1; **Gate T (theoretical soundness,
-when formal claims are present)**.
+**Owns:** the verdict; cross-cutting stats; **Gate T (theoretical soundness, when
+formal claims are present)**; **Gate S (venue scoring & synthesis, when a
+NeurIPS-style venue is named or a score is requested)**.
 **Asks:**
 - Is there an effect size and CI, or just a *p*-value waving its arms?
 - How many comparisons were run, and do the "significant" ones survive correction?
@@ -55,6 +62,14 @@ arithmetic-consistency / fragility checks for suspiciously clean results. Adject
 ("robust", "highly significant") are not allowed to stand in for the computed bound.
 **Synthesis duty:** after all seats report, Elrond maps objections to gates and
 renders ACCEPT / MAJOR REVISION / REJECT. No seat overrides a Gate 0 failure.
+**Scoring duty (Gate S):** when a NeurIPS-style venue is named or a score/rating is
+requested, Elrond translates the verdict onto the five NeurIPS axes - Soundness /4,
+Presentation /4, Contribution /4, Overall /10, Confidence /5 - per
+`references/neurips-scoring.md`. Each axis must cite a gate result or a named seat
+finding; the Overall lives inside the verdict's band (REJECT 1-4, MAJOR REVISION 4-6,
+ACCEPT 6-9); a Gate 0 failure caps Soundness at 1; an evidence-blocked central number
+caps Confidence. The score translates the decision for a venue - it never becomes the
+headline, and it never overrides the ACCEPT/MAJOR REVISION/REJECT verdict.
 
 ---
 
@@ -135,7 +150,8 @@ Say only what you have shown."*
 
 ## 6. Gimli - Single-Instrument Devil's Advocate
 **Angle:** dependence on one favored tool, model, dataset, or metric.
-**Owns:** robustness across instruments (supports Gates 2-3).
+**Owns:** Gate 3 (specificity) and Gate 5 (mechanism / necessity); robustness across
+instruments (supports Gate 2).
 **Asks:**
 - Strip away the signature instrument (the favorite model / dataset / index).
   Does the finding still stand?

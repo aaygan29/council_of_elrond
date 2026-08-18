@@ -21,7 +21,10 @@ description: >-
   reproducibility, ethics/safety, and analytic integrity/preregistration; a
   quantitative Type I/II error-analysis pass; a conditional figure-integrity review
   that fires only when figures are present; and a development mode that gives
-  generative paper-writing feedback and a Reviewer-2 pre-mortem alongside the verdict.
+  generative paper-writing feedback and a Reviewer-2 pre-mortem alongside the verdict;
+  and an optional NeurIPS-style five-axis score (Soundness, Presentation, Contribution,
+  Overall, Confidence) that translates the verdict onto a venue scale when a
+  NeurIPS-style venue is named or a rating is requested.
 ---
 
 # Council Review
@@ -180,6 +183,37 @@ worked examples for all of them in `references/empirical-gates.md`.
   tight rather than vacuous? No formal claims -> mark **N/A**. Owned by Elrond. Full
   rubric in `references/empirical-gates.md`.
 
+- **Gate S - Venue Scoring & Synthesis (conditional).** Fires only when a
+  NeurIPS-style venue is named or a score/rating is requested. Translates the verdict
+  onto the five-axis NeurIPS reviewer form (Soundness/Presentation/Contribution/Overall
+  /Confidence). Owned by **Elrond** as part of verdict synthesis - the score aggregates
+  the whole ladder and must sit inside the verdict's band. No score request -> mark
+  **N/A**. Full rubric in `references/neurips-scoring.md`.
+
+**Every gate has a reviewer.** Each gate is owned by one Council seat, who is
+accountable for that failure mode. This keeps coverage total and the panel legible:
+
+| Gate | Reviewer |
+|---|---|
+| Gate 0 Provenance & Integrity | Aragorn |
+| Gate 1 Variance / Replication | Gandalf |
+| Gate 2 Specification Robustness | Gandalf |
+| Gate 3 Specificity | Gimli |
+| Gate 4 Confound Control | Galadriel |
+| Gate 5 Mechanism / Necessity | Gimli |
+| Gate 6 Claim Calibration | Boromir |
+| Gate 7 External Validity | Faramir |
+| Gate 8 Measurement Validity | Galadriel |
+| Gate 9 Reproducibility | Eowyn |
+| Gate 10 Ethics / Safety | Treebeard |
+| Gate 11 Analytic Integrity | Bilbo |
+| Gate F Figure Integrity | Samwise |
+| Gate T Theoretical Soundness | Elrond |
+| Gate S Venue Scoring & Synthesis | Elrond |
+
+(Legolas owns no numbered gate; he anchors novelty/prior-art, which feeds the
+Contribution axis of Gate S.)
+
 Mark each gate **PASS / FAIL / N/A** with the specific evidence (a recomputed
 number, a `file:line`, a quote). N/A is allowed (a theory paper has no Gate 0; a
 text-only draft has no Gate F), but say why.
@@ -292,12 +326,27 @@ must all agree with each other. A gate marked PASS while a seat raises a
 Blocker on that same issue is a self-contradiction. A Claim Ledger "actual tier"
 that a gate result contradicts (e.g. T4 "robust" next to a failed Gate 4) is a
 self-contradiction. Fix these before output, not after - a review that ships
-with a visible internal contradiction has not finished the job.
+with a visible internal contradiction has not finished the job. When a
+NeurIPS-style score is emitted, reconcile it too: Overall must sit inside the
+verdict's band, Soundness must be ≤ 1 if any Gate 0 failed, and Confidence must
+not exceed what the evidence supports (an abstained central number caps it).
 
 When a target venue is known or given, the verdict may optionally be translated
-into that venue's scale (e.g. a NeurIPS 1-10 soundness/overall score, or a
-journal's accept/minor/major/reject scale), but the ACCEPT/MAJOR
-REVISION/REJECT decision remains primary.
+into that venue's scale (e.g. a journal's accept/minor/major/reject scale), but the
+ACCEPT/MAJOR REVISION/REJECT decision remains primary.
+
+**NeurIPS-style scoring.** When a NeurIPS-style (or generic top-ML) venue is named,
+or the user asks for a score/rating/"would this get in," translate the verdict onto
+the five-axis NeurIPS reviewer form - **Soundness /4, Presentation /4, Contribution
+/4, Overall /10, Confidence /5** - using the rubric and band-mapping in
+`references/neurips-scoring.md`. Every axis must cite a gate result or a named finding
+that already appears in the review; a score the ladder does not support is the
+review's own overclaim. The Overall number lives inside the verdict's band (REJECT
+1-4, MAJOR REVISION 4-6, ACCEPT 6-9), a Gate 0 failure caps Soundness at 1, and an
+evidence-blocked central number caps Confidence. The scores translate the decision
+for a venue; they never become the headline. Emit the score block from that reference
+directly under the Verdict line, and reconcile the bands against the verdict in the
+coherence pass.
 
 ## Calibrate the review itself
 
@@ -337,7 +386,15 @@ self-check the same systematic biases it hunts for in the work under review:
 ```
 # Council Review - <title>
 
-## Verdict: ACCEPT | MAJOR REVISION | REJECT   (optional venue score: e.g. NeurIPS-style 1-10, or accept-confidence 0-100)
+## Verdict: ACCEPT | MAJOR REVISION | REJECT
+
+## NeurIPS-style score      (include when a NeurIPS-style venue is named or a score is asked; see references/neurips-scoring.md)
+- Soundness:    _/4  - <gate/finding that fixes it>
+- Presentation: _/4  - <...>
+- Contribution: _/4  - <...>
+- Overall:      _/10 - <one-line justification; must sit inside the verdict's band>
+- Confidence:   _/5  - <why this and not higher/lower>
+- Flags: reproducibility <YES/NO> · ethics <none/see Gate 10> · borderline <n/a or the tipping factor>
 
 ## Strengths
 - <what is genuinely sound and should be preserved>
@@ -346,21 +403,22 @@ self-check the same systematic biases it hunts for in the work under review:
 ## Claim Ledger
 | # | Claim (as stated) | Asserted tier | Actual tier | Gate status |
 
-## Gate Ladder
-- Gate 0 Provenance .......... PASS/FAIL/N/A - <evidence>
-- Gate 1 Variance ............ PASS/FAIL/N/A - <evidence>
-- Gate 2 Spec Robustness ..... PASS/FAIL/N/A - <evidence>
-- Gate 3 Specificity ......... PASS/FAIL/N/A - <evidence>
-- Gate 4 Confound Control .... PASS/FAIL/N/A - <evidence>
-- Gate 5 Mechanism ........... PASS/FAIL/N/A - <evidence>
-- Gate 6 Claim Calibration ... PASS/FAIL/N/A - <evidence>
-- Gate 7 External Validity ... PASS/FAIL/N/A - <evidence>
-- Gate 8 Measurement ......... PASS/FAIL/N/A - <evidence>
-- Gate 9 Reproducibility ..... PASS/FAIL/N/A - <evidence>
-- Gate 10 Ethics/Safety ...... PASS/FAIL/N/A - <evidence>
-- Gate 11 Analytic Integrity . PASS/FAIL/N/A - <evidence>
-- Gate F Figure Integrity .... PASS/FAIL/N/A - <evidence, or "N/A - no figures">
-- Gate T Theoretical Sound ... PASS/FAIL/N/A - <evidence, or "N/A - no formal claims">
+## Gate Ladder      (each gate names its reviewer)
+- Gate 0 Provenance ......... [Aragorn]  PASS/FAIL/N/A - <evidence>
+- Gate 1 Variance ........... [Gandalf]  PASS/FAIL/N/A - <evidence>
+- Gate 2 Spec Robustness .... [Gandalf]  PASS/FAIL/N/A - <evidence>
+- Gate 3 Specificity ........ [Gimli]    PASS/FAIL/N/A - <evidence>
+- Gate 4 Confound Control ... [Galadriel] PASS/FAIL/N/A - <evidence>
+- Gate 5 Mechanism .......... [Gimli]    PASS/FAIL/N/A - <evidence>
+- Gate 6 Claim Calibration .. [Boromir]  PASS/FAIL/N/A - <evidence>
+- Gate 7 External Validity .. [Faramir]  PASS/FAIL/N/A - <evidence>
+- Gate 8 Measurement ........ [Galadriel] PASS/FAIL/N/A - <evidence>
+- Gate 9 Reproducibility .... [Eowyn]    PASS/FAIL/N/A - <evidence>
+- Gate 10 Ethics/Safety ..... [Treebeard] PASS/FAIL/N/A - <evidence>
+- Gate 11 Analytic Integrity  [Bilbo]    PASS/FAIL/N/A - <evidence>
+- Gate F Figure Integrity ... [Samwise]  PASS/FAIL/N/A - <evidence, or "N/A - no figures">
+- Gate T Theoretical Sound .. [Elrond]   PASS/FAIL/N/A - <evidence, or "N/A - no formal claims">
+- Gate S Venue Scoring ...... [Elrond]   PASS/FAIL/N/A - <see NeurIPS-style score block, or "N/A - no score requested">
 
 ## Error Analysis            (per quantitative headline)
 - Claim <n>: dominant risk = Type I | Type II; <the number that bounds it: m*alpha
