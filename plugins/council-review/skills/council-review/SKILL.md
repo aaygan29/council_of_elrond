@@ -88,6 +88,23 @@ Also fix the **stance**, orthogonal to the target type:
 State the mode, the stance, and list the central claims before judging anything. A
 review that hasn't named the claims is just vibes.
 
+### Scope the review to the ask
+
+Infer the review's depth from the user's phrasing, or ask in one line if unclear:
+
+- **Quick** (a gut check / "is this obviously broken") - run the core gates 0-6 on
+  the central claim only, the error-analysis pass on the headline number, and
+  report the top 1-3 findings plus the verdict. Skip orchestrated lookups.
+- **Standard** (default, pre-submission review) - full gate ladder as relevant, all
+  standing seats, specialists as the design invites, error-analysis pass,
+  conditional gates.
+- **Deep** (exhaustive audit / "tear it apart completely") - everything in Standard
+  plus orchestrated literature/verification lookups, recompute every checkable
+  number, convene all specialists, and run the reviewer self-guard explicitly.
+
+Empirical rigor (never rubber-stamp) is constant across levels; only breadth and
+orchestration scale.
+
 ### 2. Build the Claim Ledger
 
 For each central claim, record: the claim as stated, the **evidence tier** it
@@ -251,6 +268,20 @@ the same weight as Gate 0, but they are not automatic MAJOR REVISIONs either:
 Always end with **"What would change the verdict"**: the single most efficient
 experiment or edit that moves the work up one decision level.
 
+**Verify the load-bearing finding first.** Before rendering REJECT or MAJOR
+REVISION, identify the single load-bearing finding: the one Blocker/Major that
+most drives the decision. Apply the same steelman-then-break discipline to that
+finding that the Council applies to the work: steelman the authors' side, try to
+refute your own finding, and confirm the evidence (recompute the number, re-read
+the `file:line`, re-read the claim as actually stated). A verdict should never
+hinge on an unverified finding. This is Gate 1's adversarial discipline turned on
+the review's own decision.
+
+When a target venue is known or given, the verdict may optionally be translated
+into that venue's scale (e.g. a NeurIPS 1-10 soundness/overall score, or a
+journal's accept/minor/major/reject scale), but the ACCEPT/MAJOR
+REVISION/REJECT decision remains primary.
+
 ## Calibrate the review itself
 
 The review is subject to the same Type I discipline it applies to the work under
@@ -266,12 +297,30 @@ positive.
 - Do not inflate a Nit to a Blocker to look rigorous. Do not bury a Blocker as a
   Nit to be polite. Severity is a claim about the work, not a performance of scrutiny.
 
+### Reviewer failure-modes self-guard
+
+The review is itself an experiment, and these are its confounds. The Council must
+self-check the same systematic biases it hunts for in the work under review:
+
+- **Anchoring** (first impression fixes the verdict) -> form the verdict from the
+  gate ladder, not the first read.
+- **Elegance / halo** (a beautiful method waved through) -> an elegant method still
+  must pass Gate 0-6; beauty is not evidence.
+- **Confirmation** (finding the flaw you expected) -> run the steelman before the
+  attack; let a clean gate be clean.
+- **Severity inflation / harshness performance** (inflating nits to look rigorous)
+  -> severity is a claim about the work, not a display of scrutiny.
+- **Base-rate neglect** (assuming something must be wrong) -> "no objection" is a
+  valid, honest seat entry; a strong work earns a fast ACCEPT.
+- **Novelty / prestige / authorship bias** (over- or under-crediting by source) ->
+  judge the artifact, not the byline.
+
 ## Output format
 
 ```
 # Council Review - <title>
 
-## Verdict: ACCEPT | MAJOR REVISION | REJECT
+## Verdict: ACCEPT | MAJOR REVISION | REJECT   (optional venue score: e.g. NeurIPS-style 1-10, or accept-confidence 0-100)
 
 ## Strengths
 - <what is genuinely sound and should be preserved>
