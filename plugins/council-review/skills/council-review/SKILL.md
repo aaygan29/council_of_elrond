@@ -15,7 +15,13 @@ description: >-
   "am I overclaiming?", "is this publishable?", "tear this apart", "review my
   results", "is my method sound?", "what's wrong with this experiment?". Trigger
   even when the user doesn't say the word "review" but is clearly asking for
-  empirical scrutiny of a scientific claim or artifact.
+  empirical scrutiny of a scientific claim or artifact. Runs a twelve-seat panel and
+  an extended gate ladder covering provenance, variance, robustness, specificity,
+  confounds, mechanism, calibration, external validity, measurement reliability,
+  reproducibility, ethics/safety, and analytic integrity/preregistration; a
+  quantitative Type I/II error-analysis pass; a conditional figure-integrity review
+  that fires only when figures are present; and a development mode that gives
+  generative paper-writing feedback and a Reviewer-2 pre-mortem alongside the verdict.
 ---
 
 # Council Review
@@ -69,8 +75,18 @@ Identify what you're reviewing and in which mode:
   Cross-check every headline number in the text against the artifact that
   produced it. Mismatches are findings.
 
-State the mode and list the central claims before judging anything. A review that
-hasn't named the claims is just vibes.
+Also fix the **stance**, orthogonal to the target type:
+
+- **Gatekeeper stance** (default) - "is this real / tear it apart / pre-submission."
+  The verdict is the product; findings are ruthless and terminal where warranted.
+- **Development stance** - "help me write / strengthen this / is my argument clear."
+  The verdict still runs (rigor is not optional on a draft), but the emphasis shifts
+  to generative feedback: every finding pairs with the concrete edit that fixes it,
+  plus an Exposition pass and a Reviewer-2 pre-mortem. See
+  `references/paper-development.md`. When the stance is ambiguous, ask in one line.
+
+State the mode, the stance, and list the central claims before judging anything. A
+review that hasn't named the claims is just vibes.
 
 ### 2. Build the Claim Ledger
 
@@ -111,9 +127,49 @@ exact statistical checks each gate demands. The ladder in brief:
   driver actually carry the functional load, or is it present-but-redundant?
 - **Gate 6 - Claim Calibration.** Does each claim's language match its evidence
   tier? In-silico is not in-vivo. Correlational is not causal.
+Gates 0-6 are the terminal-ordered empirical core (is the finding real?). Gates 7-11
+are the **methodology-completeness tier** (was the study well built and reported?) and
+apply as the design invites; Gate F is conditional on figures. Full definitions and
+worked examples for all of them in `references/empirical-gates.md`.
+
+- **Gate 7 - External Validity & Generalization.** Does it hold beyond the exact
+  sample/dataset/model/site tested? OOD or transfer test, or generalization asserted
+  from one split? Representative sample or convenience sample the claim outgrows?
+- **Gate 8 - Measurement Validity & Reliability.** Does the instrument measure the
+  construct, and reliably (test-retest / internal consistency / inter-rater)? Does the
+  effect fit under the reliability ceiling? Ceiling/floor effects, manipulation checks.
+- **Gate 9 - Reproducibility & Computational Provenance.** Seeds, configs, splits,
+  code, environment, versioned data released? Nondeterminism controlled? Compute/cost
+  reported so "better" is separable from "bigger budget"?
+- **Gate 10 - Ethics, Safety & Responsible Disclosure.** IRB/consent/privacy for
+  subjects; licensing/PII for data; dual-use/release-gating for misuse-capable work;
+  honest broader impacts; subgroup-harm checks where warranted.
+- **Gate 11 - Analytic Integrity.** Preregistration / analysis plan? Confirmatory and
+  exploratory results separated, or an exploratory finding narrated as a priori
+  (HARKing)? Forking paths pre-committed? Stopping rule and outcomes fixed?
+- **Gate F - Figure & Visualization Integrity (conditional).** Fires **only if the
+  work contains figures** you can actually inspect. Each figure: one clear takeaway
+  stated in its caption, self-explanatory, honest encoding (axes not truncated, error
+  bars and chance line present), readable and colorblind-safe, and actually showing
+  what the text claims. A figure that contradicts a central claim is a Blocker. No
+  figures -> mark **N/A**. Full rubric in `references/figure-review.md`.
 
 Mark each gate **PASS / FAIL / N/A** with the specific evidence (a recomputed
-number, a `file:line`, a quote).
+number, a `file:line`, a quote). N/A is allowed (a theory paper has no Gate 0; a
+text-only draft has no Gate F), but say why.
+
+**Quantitative error-analysis pass.** For every quantitative headline, run the
+statistical robustness battery in `references/statistical-robustness.md` and show the
+arithmetic. Name the error most at risk here: **Type I** (false positive: is the
+"significant" result just `m x alpha` chances at the null? does it survive correction?
+what is the binomial by-chance tail?) or **Type II** (underpowered null: what is the
+minimum detectable effect size at this N? is the CI wide enough that "no effect" is
+really "no power"?). Then run the hostile-reviewer hard checks the numbers permit:
+reported-stat <-> p consistency (statcheck), SE/SD/CI coherence, GRIM/GRIMMER,
+caliper/p-curve for p-hacking, Fisher-z CI on correlations, expected false discoveries
+under FDR, positive predictive value at the true prior, leave-one-out fragility, and
+the minimum-Bayes-factor / s-value translation of the headline p. Adjectives do not
+substitute for the computed bound.
 
 ### 4. Convene the Council
 
@@ -127,6 +183,21 @@ Each seat attacks from one fixed angle. The full charge sheet is in
 5. **Boromir - Overclaim Sentinel.** "Where did the claim outrun the data?"
 6. **Gimli - Single-Instrument Devil's Advocate.** "Strip the favorite instrument. Does the finding stand?"
 7. **Legolas - Literature Anchor.** "Is this novel? Do citations support the sentences they attach to?"
+8. **Samwise - Figure & Exposition Auditor.** "Do the figures show, clearly and honestly, what the text claims? Is every contribution traceable to a result?" (Owns Gate F; fires figure duties only when figures are present. On a text-only target, contributes the exposition pass alone.)
+
+Seats 1-8 are the standing panel (they sit on every review). Four **specialist seats**
+convene when the design invites them; say in one line why each is seated or skipped:
+
+9. **Faramir - External Validity.** "Does it hold beyond this one sample/model/site?" (Gate 7)
+10. **Eowyn - Reproducibility & Open Science.** "Could someone else re-run it? Seeds, configs, code, data?" (Gate 9)
+11. **Bilbo - Preregistration & Analytic Integrity.** "Was this confirmatory or exploratory? Where's the plan? Any HARKing?" (Gate 11)
+12. **Treebeard - Ethics, Safety & Responsible Disclosure.** "Consent, licensing, dual-use, broader impact, subgroup harms?" (Gate 10)
+
+Two adversarial disciplines apply to every seat: **steelman then break** (attack the
+strongest honest reading, not a strawman), and **name the experiment that would
+embarrass the author** (the specific plot/seed-sweep/ablation whose likely outcome
+would sink the claim). The scariest such experiment is a candidate for "what would
+change the verdict."
 
 ### 5. Orchestrate supporting skills
 
@@ -164,6 +235,17 @@ experiment or edit that moves the work up one decision level.
 - Gate 4 Confound Control .... PASS/FAIL/N/A - <evidence>
 - Gate 5 Mechanism ........... PASS/FAIL/N/A - <evidence>
 - Gate 6 Claim Calibration ... PASS/FAIL/N/A - <evidence>
+- Gate 7 External Validity ... PASS/FAIL/N/A - <evidence>
+- Gate 8 Measurement ......... PASS/FAIL/N/A - <evidence>
+- Gate 9 Reproducibility ..... PASS/FAIL/N/A - <evidence>
+- Gate 10 Ethics/Safety ...... PASS/FAIL/N/A - <evidence>
+- Gate 11 Analytic Integrity . PASS/FAIL/N/A - <evidence>
+- Gate F Figure Integrity .... PASS/FAIL/N/A - <evidence, or "N/A - no figures">
+
+## Error Analysis            (per quantitative headline)
+- Claim <n>: dominant risk = Type I | Type II; <the number that bounds it: m*alpha
+  expectation / binomial tail / survivors after correction / MDES / PPV / fragility>;
+  settle-it check = <the one recomputation that would resolve it>
 
 ## Council Objections      (Blocker | Major | Minor | Nit)
 - **Elrond (stats):** ...
@@ -173,6 +255,11 @@ experiment or edit that moves the work up one decision level.
 - **Boromir (overclaim):** ...
 - **Gimli (single-instrument):** ...
 - **Legolas (literature):** ...
+- **Samwise (figures/exposition):** ...   (figure points only if figures present)
+- **Faramir (external validity):** ...    (specialist; seat/skip with reason)
+- **Eowyn (reproducibility):** ...        (specialist; seat/skip with reason)
+- **Bilbo (analytic integrity):** ...     (specialist; seat/skip with reason)
+- **Treebeard (ethics/safety):** ...      (specialist; seat/skip with reason)
 
 ## Severity-ranked findings
 1. [Blocker] ... Fix: ...
@@ -184,6 +271,22 @@ experiment or edit that moves the work up one decision level.
 
 ## Evidence log
 <citations, file:line refs, every recomputed number with its source>
+```
+
+**Development-stance add-ons** (include only when the stance is development; see
+`references/paper-development.md`):
+
+```
+## Exposition pass
+- Contribution traceability: <each claimed contribution -> its result/figure, or "no home">
+- Argument-chain breaks: <abstract-promise-without-result / result-without-discussion / ...>
+- "So what" in one sentence: <the significance a non-specialist would care about>
+
+## Figure feedback (generative)   (only if figures present)
+- <figure>: takeaway + the one edit that makes it land harder (caption/encoding/money-figure)
+
+## Reviewer-2 pre-mortem
+- Claim <n>: strongest objection -> [defensible now | fixable: <edit> | structural: <scope down / new work>]
 ```
 
 ## Operating principles

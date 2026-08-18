@@ -1,0 +1,54 @@
+{
+  "skill_name": "council-review",
+  "evals": [
+    {
+      "id": 1,
+      "name": "manuscript-overclaim-check",
+      "prompt": "Read the abstract and key-results of my digital-brain paper at ~/Desktop/Research/Neuro-AI/digital-brain/README.md. The headline is that geometry-aware encoders capture individual neural organization and that 21/25 ROIs fingerprint subjects significantly. Is this finding real, or am I overclaiming? Give me a hard verdict before I submit.",
+      "expected_output": "A Council Review with a Claim Ledger separating the fingerprinting claim (amplitude individuation) from the geometry/RSA-alignment claim; a gate ladder that flags Gate 0 (N=4, noise ceilings, real vs synthetic provenance incl. the DO_NOT_CITE archive), Gate 6 (representational asymmetry - geometry individuation only partial, so any 'captures individual neural organization' phrasing must be calibrated), and Gate 1 (N=4 power); an Error Analysis that computes the binomial by-chance tail for 21/25 at alpha=0.05 (astronomically small, so the count is real) while flagging ROI dependence; an ACCEPT/MAJOR REVISION/REJECT verdict; and a 'what would change the verdict' (scale to N=8 for the projected p<5e-8). Should NOT rubber-stamp it.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "artifact-seed-variance",
+      "prompt": "I think I found that small-world regularization improves my transformer. The result and pipeline are in ~/Desktop/Research/Neuro-AI/neuro-ai-pipeline/ (see results/ and the README). Tear it apart empirically - would this survive more seeds? Should I write it up?",
+      "expected_output": "A Council Review operating in artifact mode and gatekeeper stance that opens the actual phase1a/phase2 results, recognizes the multi-seed result already overturns the single-run improvement (Cohen's d = -1.20, regularizer HURTS), runs Gate 1 (variance) and Gate 3 (specificity ablation: no topology regularizer beats baseline) as FAIL for the 'improves' claim, and REJECTS the 'improvement' framing while ACCEPTing the honest 'emergent byproduct, not a driver' framing. Verdict must hinge on the gate ladder, not vibes.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "proposal-confound-and-novelty",
+      "prompt": "Here's a claim for a new proposal: 'Better language models are more brain-like in their early-layer attention topology (Spearman rho = -0.83 with perplexity, p = 0.04), demonstrating that biological structure drives capability.' Is this sound? Pressure-test it and tell me if it's publishable as stated.",
+      "expected_output": "A Council Review that flags Gate 4 (confound: size co-varies with both axes - demand the partial correlation controlling for log-params, which kills significance, rho=-0.67 p=0.14 NS), Gate 6 (causal verb 'drives' on correlational evidence; in-silico framing), and Gimli (single-instrument / cross-model robustness). Error Analysis should note the Type I fragility (p=0.04 is only ~4.6 bits, weak; minimum Bayes factor near 1) and the small-n Fisher-z CI on rho. Verdict MAJOR REVISION or REJECT-as-stated, with the partial correlation named as the decisive missing analysis in 'what would change the verdict'.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "name": "figure-integrity-conditional",
+      "prompt": "Review the results figures in my draft (Fig 2 is a bar chart of accuracy for my method vs baseline with the y-axis starting at 0.90 and no error bars; Fig 3 is a single 'representative' example trace; the abstract says the method 'clearly separates the two conditions'). Does the paper show what it claims?",
+      "expected_output": "A Council Review where Gate F FIRES (figures present) and Samwise leads: Fig 2 flagged for a truncated y-axis inflating a small gain and for missing error bars / no chance line (F2 honesty, at least Major); Fig 3 flagged as an anecdote narrated as typical, demanding the aggregate/distribution; and an F4 claim-figure check on 'clearly separates' against whatever the figure actually shows (Blocker if the figure shows overlap). Error Analysis asks for the effect size + CI behind Fig 2. Should give generative fixes (start axis at 0, add 95% CI whiskers, draw chance line, show the distribution).",
+      "files": []
+    },
+    {
+      "id": 5,
+      "name": "development-mode-rebuttal-premortem",
+      "prompt": "This is still a draft and I want help making it stronger before I submit to NeurIPS, not just a thumbs up or down. Read it and tell me where a hostile reviewer will attack and what I should fix.",
+      "expected_output": "A Council Review in DEVELOPMENT stance: still runs the gate ladder and error-analysis pass, but centers generative feedback. Includes an Exposition pass (contribution traceability to results/figures, argument-chain breaks, a one-sentence 'so what'), maps findings onto the real review axes (Quality/Clarity/Significance/Originality/Limitations/Reproducibility), and produces a Reviewer-2 pre-mortem: for each central claim the strongest objection plus whether it is defensible now, fixable-before-submission (with the specific edit), or structural (scope down / new work). Every finding pairs with a concrete fix.",
+      "files": []
+    },
+    {
+      "id": 6,
+      "name": "generalization-and-reproducibility",
+      "prompt": "My decoder gets 92% accuracy classifying condition from fMRI on subjects scanned at one site, and I want to claim it's a general biomarker. The code trains with a fixed hand-picked seed I didn't record and the data is 'available on request'. Is this ready to claim as a biomarker?",
+      "expected_output": "A Council Review where Faramir leads Gate 7 (external validity): a single-site convenience sample cannot support a 'general biomarker' claim; demand an out-of-site/transfer test, because near-perfect single-site accuracy is a classic site/acquisition-artifact tell (also pull Gate 0). Eowyn leads Gate 9 (reproducibility) FAIL: unrecorded seed, no released config, 'data on request' is not reproducible; the headline is at most T3. Verdict MAJOR REVISION; 'what would change the verdict' names the second-site validation plus a released, seeded recipe.",
+      "files": []
+    },
+    {
+      "id": 7,
+      "name": "analytic-integrity-and-ethics",
+      "prompt": "We collected face images from social media and trained a model that infers a personality trait, and our abstract says we 'preregistered the prediction that trait X is decodable'. The significant result was actually the third subgroup we looked at. Any problems before we submit?",
+      "expected_output": "A Council Review where Bilbo leads Gate 11 (analytic integrity): the 'preregistered' framing is contradicted by the result being the third subgroup examined post hoc (HARKing / exploratory relabeled confirmatory); the claim must be re-scoped to exploratory (T3, not T5), and the prereg checked against the stated primary outcome. Treebeard leads Gate 10 (ethics): scraped social-media faces raise consent/licensing/PII problems, trait inference from faces raises dual-use and validity concerns, and broader impacts are unaddressed. Error Analysis flags the multiple-subgroup Type I inflation. Verdict MAJOR REVISION or REJECT depending on venue, with both the analytic-integrity and ethics gaps as Blockers.",
+      "files": []
+    }
+  ]
+}

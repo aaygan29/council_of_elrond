@@ -174,6 +174,211 @@ surviving correction).
 
 ---
 
+---
+
+# Extended methodology gates (7-11)
+
+Gates 0-6 are the terminal-ordered empirical core: they decide whether the headline
+finding is real. Gates 7-11 are the **methodology-completeness tier**: they decide
+whether the study, as an instrument of knowledge, was well built and well reported.
+A paper can pass 0-6 (the effect is real) and still fail here (it won't generalize,
+the measure is unreliable, no one can reproduce it, it wasn't preregistered, or it has
+an ethics gap). Apply each as the design invites; mark N/A with a reason when a gate
+genuinely doesn't apply (a pure-theory paper has no Gate 8; a public-benchmark paper
+may have a light Gate 10). These are not tie-breakers, they are first-class quality.
+
+## Gate 7 - External Validity & Generalization
+
+**Question:** Does the finding hold beyond the exact sample, dataset, model, and
+conditions tested, to the population the claim is actually about?
+
+**Checks:**
+- Is there an out-of-distribution / held-out-domain / transfer test, or is
+  generalization asserted from a single in-distribution split?
+- Is the sample representative of the target population, or a convenience sample whose
+  scope the claim silently exceeds (one model family, one site, one language, one
+  cohort)?
+- Boundary conditions: does the paper state where the effect should and should not
+  hold, and test at least one boundary?
+- For benchmarks: is the eval set representative of the deployment distribution, or a
+  narrow slice?
+
+**FAIL looks like:** "our method generalizes" with results on one dataset; a human
+result from undergraduates generalized to "people"; a model claim from one architecture
+narrated as a property of models in general.
+
+**Worked example:** a decoder reported 92% accuracy on subjects from one scanner site
+and claimed a general biomarker. Tested on a second site it fell to chance, because the
+signal was site/acquisition artifact, not biology. The honest claim is site-specific
+until multi-site validation exists. -> Generalization claims without an
+out-of-sample test are at most T3; usually **MAJOR REVISION** (add the transfer test).
+
+## Gate 8 - Measurement Validity & Reliability
+
+**Question:** Does the instrument measure the construct, and does it measure it
+consistently? (Owned by Galadriel, jointly with the confound work in Gate 4.)
+
+**Checks:**
+- **Construct validity:** does the operationalization capture the named construct, or a
+  convenient proxy that drifts from it?
+- **Reliability:** test-retest, internal consistency, or inter-rater agreement reported
+  where relevant? An effect cannot exceed the reliability ceiling of its measures.
+- **Measurement error / attenuation:** is noise in the instrument accounted for? A weak
+  correlation may be a strong one attenuated by unreliable measures, or a noise
+  artifact - the paper should know which.
+- **Ceiling / floor effects:** is the scale saturating, hiding real variance?
+- **Manipulation check:** for an intervention, is there evidence the manipulation did
+  what it claims before its downstream effect is interpreted?
+
+**FAIL looks like:** a composite "index" whose components are never validated;
+inter-rater reliability unreported for subjective coding; an effect near the noise floor
+of an unreliable instrument treated as clean signal.
+
+**Worked example:** a "creativity score" from a single unvalidated rater drove the
+headline. With a second rater, agreement was kappa = 0.2 (poor); most of the "effect"
+was rater idiosyncrasy. -> Unvalidated/unreliable measurement caps the claim; report
+reliability first. Usually **MAJOR REVISION**.
+
+## Gate 9 - Reproducibility & Computational Provenance
+
+**Question:** Could an independent party re-run this and get the same result?
+
+**Checks:**
+- Seeds, configs, hyperparameters, and exact data splits stated or released?
+- Code and environment (versions, dependencies, hardware) available or specified?
+- Data versioned and citable, with a fixed accessor, not "available on request"?
+- Determinism: are sources of nondeterminism controlled or at least reported?
+- Compute and cost reported, so a "better" result can be separated from a
+  bigger-budget one?
+
+**FAIL looks like:** a headline number with no released config or seed; "data available
+on request"; results that can't be traced to a specific commit; nondeterministic
+pipeline with no seed control.
+
+**Worked example:** a reported SOTA could not be reproduced because the winning run used
+an undisclosed learning-rate schedule and a hand-picked seed; across released settings
+the method was mid-pack. -> An unreproducible headline is at most T3 regardless of its
+size; releasing the exact recipe is often the cheapest verdict-changing fix.
+
+## Gate 10 - Ethics, Safety & Responsible Disclosure
+
+**Question:** Was the work conducted and is it reported responsibly, and are its risks
+handled?
+
+**Checks:**
+- Human/animal subjects: IRB/ethics approval, informed consent, and privacy handled and
+  stated?
+- Data: licensing, consent, and PII handling for any collected or scraped dataset?
+- Dual-use / release risk: for capabilities that could be misused, is there a
+  responsible-disclosure or release-gating consideration rather than silence?
+- Broader impacts and limitations stated honestly (as venues now require)?
+- Fairness / subgroup harms: are disparate error rates across groups checked where the
+  application warrants it?
+
+**FAIL looks like:** human-subjects data with no consent/IRB statement; a scraped
+dataset with unaddressed licensing/PII; a misuse-capable artifact released with no risk
+discussion; "broader impacts" omitted where required.
+
+**Worked example:** a face-inference model was released with a demo but no consent
+provenance for the training faces and no misuse discussion. -> Ethics gaps are not
+cosmetic; depending on venue they force **MAJOR REVISION** or desk-reject-level
+**REJECT**, independent of technical quality.
+
+## Gate 11 - Analytic Integrity (preregistration, confirmatory vs exploratory)
+
+**Question:** Were the analyses that support the claim specified before seeing the data,
+and are confirmatory and exploratory results honestly separated?
+
+**Checks:**
+- Is there a preregistration / analysis plan, or is the design purely post-hoc?
+- Are confirmatory tests (planned, hypothesis-testing) separated from exploratory ones
+  (hypothesis-generating), or is an exploratory finding narrated as confirmatory?
+- **HARKing:** is a hypothesis presented as a priori that was actually formed after
+  seeing the result?
+- **Garden of forking paths:** how many defensible analysis paths existed, and were the
+  reported choices pre-committed? (This expands the forking-paths note in Gate 6 into a
+  first-class check and pairs with the p-hacking screens in the statistical pass.)
+- Are the stopping rule and outcome set fixed, or did data collection/outcomes flex to
+  reach significance?
+
+**FAIL looks like:** an exploratory subgroup finding written as the a priori hypothesis;
+no analysis plan for a confirmatory-sounding claim; outcome switching between analyses.
+
+**Worked example:** an abstract stated a preregistered prediction, but the preregistration
+named a different primary outcome; the "confirmatory" result was exploratory. -> An
+exploratory result relabeled confirmatory must be re-scoped to exploratory (T3, not T5);
+this often changes the paper's contribution and is a **MAJOR REVISION**.
+
+---
+
+## Gate F - Figure & Visualization Integrity (conditional)
+
+**Question:** Do the figures show, clearly and honestly, what the text claims?
+
+**Fires only if the work contains figures.** No visual exhibit → mark **N/A - no
+figures present** and move on. Do not manufacture a figure critique for a text-only
+draft, and do not penalize a proposal for lacking figures it isn't expected to have.
+
+**Checks (full rubric in `references/figure-review.md`):**
+- **Message:** each figure makes one clear point; the caption states the takeaway
+  (not a bare "Figure 3: results"); the figure is self-explanatory from figure +
+  caption alone; every headline claim has a supporting figure or table.
+- **Honesty of encoding:** axes not truncated/dual-scaled to inflate an effect; error
+  bars / CIs present with their meaning and n stated; chance line / noise ceiling
+  actually drawn; aggregate shown rather than a hand-picked "representative" example.
+- **Readability:** colorblind-safe (no red/green-only; viridis/blue-orange), legible
+  at print size, not overloaded, not a figure that should be a sentence.
+- **Claim-figure correspondence:** the figure supports the sentence citing it; no
+  figure quietly shows a null the text narrates as a win; referenced panels exist.
+
+**FAIL looks like:** a bar chart truncated at 0.9 turning a 1% gain into a skyscraper;
+accuracy bars with no error bars and no chance line; an abstract claiming "clear
+separation" over a panel showing overlapping distributions; a 9-line red/green
+spaghetti plot no reader can decode.
+
+**Worked example (the honest-null figure):** an abstract asserted a method "cleanly
+separates" two conditions. The cited figure showed two violin plots with ~70% overlap
+and no significance annotation. The picture contradicted the sentence. → An F4
+claim-figure mismatch on a central claim is a **Blocker**; the honest fix is either a
+statistic that establishes separation or a claim retracted to "partially separates."
+
+Gate F severity feeds the verdict like any other gate: an F4 mismatch on a central
+claim can force REJECT / MAJOR REVISION; misleading axes or missing uncertainty on the
+headline figure is at least Major; message/readability issues are Minor in gatekeeper
+mode but first-class generative feedback in development mode.
+
+---
+
+## Modern ML / empirical failure-mode checklist (cross-cutting)
+
+Beyond the numbered gates, sweep for the failure modes that sink applied ML and
+in-silico papers at real venues. Each maps to a gate but is easy to miss if you only
+walk the ladder abstractly:
+
+- **Weak or missing baselines.** Is the comparison against a *fair, tuned* baseline,
+  or a strawman? SOTA claimed against an under-trained competitor is a Gate 3 problem.
+- **Benchmark cherry-picking.** Reported on the subset of datasets/metrics where the
+  method wins? Ask for the ones it was *not* shown on.
+- **Data contamination / leakage (LLM-era).** For LLM results: could the eval set be
+  in pretraining? Is the benchmark post-cutoff or decontaminated? (Gate 0.)
+- **No error bars / single run.** Deep-learning headline numbers with no seed spread
+  (Gate 1). One run is an anecdote.
+- **Prompt / hyperparameter sensitivity.** Does the result hold across reasonable
+  prompts, few-shot orderings, or hyperparameters, or only the reported one? (Gate 2.)
+- **Compute / cost not reported.** "Better" that is really "trained 10x longer" is a
+  budget effect, not a method effect (Gate 3/4).
+- **Evaluation on the training distribution only.** No OOD / held-out-domain test for
+  a generalization claim (Gate 6 calibration).
+- **Reproducibility.** Are seeds, configs, data splits, and code released? An
+  unreproducible headline is at most T3 no matter how large the number.
+- **Metric gaming.** Is the headline metric the one the community trusts, or a
+  favorable proxy chosen post hoc? (Galadriel, Gate 4.)
+
+Not every item applies to every paper. Run the ones the design invites, and name the
+one whose failure would most embarrass the work.
+
+---
+
 ## Cross-cutting statistical standards
 
 - **Effect size + CI > p-value.** A p alone is nearly uninformative.
