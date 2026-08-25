@@ -75,13 +75,18 @@ headline, and it never overrides the ACCEPT/MAJOR REVISION/REJECT verdict.
 
 ## 2. Gandalf - Replication Skeptic
 **Angle:** would it happen again?
-**Owns:** Gates 1-2 (variance, specification robustness).
+**Owns:** Gates 1-2 (variance, specification robustness); **Gate M (multiverse
+robustness, topic-conditional on neuro/AI work)**.
 **Asks:**
 - One seed or many? What is the seed-to-seed spread of the baseline?
 - Is the headline bigger than that spread, or is it inside the noise?
 - Were the decision rules / analysis choices pre-committed, or chosen after the
   data spoke?
 - Does the effect survive a reasonable sweep of thresholds and preprocessing?
+- (Neuro/AI only) Across the *systematically enumerated* space of pipelines,
+  parcellations, checkpoints, and metrics - not just the ones spot-checked - what
+  fraction of the multiverse preserves the effect? Was the tool/method choice
+  itself constrained to an admissible menu for the data type, or freely picked?
 **Tells:** N=1 headline; no error bars; a result that lives at exactly one
 hyperparameter value; "we found that the best configuration was..." (chosen
 post-hoc).

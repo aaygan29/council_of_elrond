@@ -84,6 +84,54 @@ Correct handling: keep the robust directional claim, drop the unstable point est
 
 ---
 
+## Gate M - Multiverse Robustness (conditional: neuro/AI topic)
+
+**Fires when:** the work is in-silico neuro/AI (encoding models, RSA, fMRI/EEG
+alignment, attention-topology, manipulation/footprint metrics, or any AI-model-vs-brain
+comparison). Not applicable outside this domain -> mark N/A. Owned by **Gandalf**, as
+an extension of Gate 2.
+
+**Why this is separate from Gate 2:** Gate 2 asks whether the result survives a
+handful of spot-checked alternatives. Gate M asks whether it survives the *systematic
+enumeration* of the analytical-choice space, following the "multiverse analysis"
+discipline from Brain Researcher (arXiv:2608.19902) - a neuroimaging-agent harness
+built specifically to catch selective-analysis and premature-success failures in
+this exact domain. A single robustness spot-check can still land inside a lucky
+pocket of the multiverse; the systematic sweep cannot.
+
+**Question:** Across the full, honestly-enumerated space of defensible analytical
+choices (not just the ones tried), how much of the result's mass survives?
+
+**Checks:**
+- Enumerate the actual choice space before testing it: preprocessing pipeline
+  variants, ROI/parcellation definitions, encoder/embedding checkpoints, alignment
+  metric (correlation vs. RSA vs. CKA), statistical test, and multiple-comparison
+  correction. List every fork, not just the ones that were run.
+- Report the *distribution* of the effect across the specification space (e.g. "held
+  in 34/40 pipeline combinations, sign-flipped in 6") rather than a single
+  robustness anecdote.
+- Distinguish forks that were pre-specified from forks explored post-hoc looking
+  for the strongest result - the latter is Gate 11 (analytic integrity) territory
+  as well as a Gate M failure.
+- Was the tool/analysis-method choice itself constrained to admissible options for
+  the data type, or freely selected in a way that could steer toward a favorable
+  result? (Brain Researcher's core finding: unconstrained tool selection is a major
+  failure mode in agentic neuroimaging analysis - first-choice accuracy rose from
+  23% to 94% once analyses were constrained to an admissible menu per data type.)
+
+**FAIL looks like:** a robustness claim resting on 2-3 hand-picked alternative
+specifications rather than a systematic sweep; a result that only appears in the
+specification the paper reports and is silent on the ones it doesn't; free-form
+tool/method selection with no admissibility constraint tied to the data type.
+
+**Worked example:** An encoding-model result is reported at one ROI parcellation,
+one preprocessing pipeline, and one embedding layer. Gate 2 alone might accept a
+single alternate-threshold check as "robust." Gate M requires the full grid (e.g.
+3 parcellations x 2 pipelines x 4 layers = 24 cells) reported, with the fraction
+of cells preserving the sign and rough magnitude of the effect stated explicitly.
+
+---
+
 ## Gate 3 - Specificity
 
 **Question:** Is the named mechanism specifically responsible, or would any

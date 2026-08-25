@@ -20,7 +20,9 @@ description: >-
   confounds, mechanism, calibration, external validity, measurement reliability,
   reproducibility, ethics/safety, and analytic integrity/preregistration; a
   quantitative Type I/II error-analysis pass; a conditional figure-integrity review
-  that fires only when figures are present; and a development mode that gives
+  that fires only when figures are present; a conditional multiverse-robustness gate
+  that fires only when the work deals with the brain, AI, or both; and a development
+  mode that gives
   generative paper-writing feedback and a Reviewer-2 pre-mortem alongside the verdict;
   and an optional NeurIPS-style five-axis score (Soundness, Presentation, Contribution,
   Overall, Confidence) that translates the verdict onto a venue scale when a
@@ -152,8 +154,17 @@ exact statistical checks each gate demands. The ladder in brief:
   tier? In-silico is not in-vivo. Correlational is not causal.
 Gates 0-6 are the terminal-ordered empirical core (is the finding real?). Gates 7-11
 are the **methodology-completeness tier** (was the study well built and reported?) and
-apply as the design invites; Gate F is conditional on figures. Full definitions and
+apply as the design invites; Gate F is conditional on figures; Gate M is conditional
+on topic (fires only for in-silico neuro/AI work - encoding models, RSA, fMRI/EEG
+alignment, attention-topology, brain-vs-model comparisons). Full definitions and
 worked examples for all of them in `references/empirical-gates.md`.
+
+- **Gate M - Multiverse Robustness (conditional on topic).** Fires only when the
+  work deals with the brain, AI, or both together (in-silico neuro/AI). Extends
+  Gate 2 from spot-checked alternatives to a systematically enumerated analytical
+  multiverse (preprocessing, ROI/parcellation, embedding/checkpoint, alignment
+  metric, correction) with the fraction of the space that preserves the effect
+  reported explicitly - not neuro/AI -> mark **N/A**.
 
 - **Gate 7 - External Validity & Generalization.** Does it hold beyond the exact
   sample/dataset/model/site tested? OOD or transfer test, or generalization asserted
@@ -208,6 +219,7 @@ accountable for that failure mode. This keeps coverage total and the panel legib
 | Gate 10 Ethics / Safety | Treebeard |
 | Gate 11 Analytic Integrity | Bilbo |
 | Gate F Figure Integrity | Samwise |
+| Gate M Multiverse Robustness (topic-conditional) | Gandalf |
 | Gate T Theoretical Soundness | Elrond |
 | Gate S Venue Scoring & Synthesis | Elrond |
 
@@ -407,6 +419,7 @@ self-check the same systematic biases it hunts for in the work under review:
 - Gate 0 Provenance ......... [Aragorn]  PASS/FAIL/N/A - <evidence>
 - Gate 1 Variance ........... [Gandalf]  PASS/FAIL/N/A - <evidence>
 - Gate 2 Spec Robustness .... [Gandalf]  PASS/FAIL/N/A - <evidence>
+- Gate M Multiverse Robust .. [Gandalf]  PASS/FAIL/N/A - <evidence, or "N/A - not neuro/AI">
 - Gate 3 Specificity ........ [Gimli]    PASS/FAIL/N/A - <evidence>
 - Gate 4 Confound Control ... [Galadriel] PASS/FAIL/N/A - <evidence>
 - Gate 5 Mechanism .......... [Gimli]    PASS/FAIL/N/A - <evidence>
